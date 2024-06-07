@@ -7,6 +7,7 @@ use App\Models\User;
 use Filament\Actions;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
@@ -16,8 +17,10 @@ use Filament\Forms\Components\Split;
 use Filament\Forms\Components\ViewField;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Pages\Page;
 use Livewire\Attributes\Computed;
+use Filament\Infolists\Components\ViewEntry;
 use Livewire\WithPagination;
 
 
@@ -41,8 +44,7 @@ class Invoice extends Page
                     Grid::make()
                         ->live()
                         ->schema([
-    
-                            Fieldset::make()
+                            Grid::make()
                                 ->live()
                                 ->schema([
                                     Forms\Components\TextInput::make('name')
@@ -51,7 +53,7 @@ class Invoice extends Page
                                         ->live()
                                         ->afterStateUpdated(function (Set $set, $state, Get $get) { 
                                             $set('orderName', $get('name'));
-                                        }),
+                                        })->columnSpanFull(),
                             
                                     Forms\Components\Select::make('user_id')
                                         ->options(fn() => User::whereNot('id', auth()->user()->id)->pluck('name', 'id'))
@@ -64,7 +66,23 @@ class Invoice extends Page
                                                 $set('email', $user->email);
                                                 $set('authUser', auth()->user()->name);
                                             }
-                                        }),
+                                        })->createOptionForm([
+                                            Forms\Components\TextInput::make('name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('email')
+                                            ->email()
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('password')
+                                            ->password()
+                                            ->required()
+                                            ->maxLength(255),
+                                       Forms\Components\FileUpload::make('image_url')
+                                       ->disk('public')
+                                       ->directory('user-images')
+                                       ->visibility('public')
+                                        ])->columnSpanFull(),
                                     
                                     Repeater::make('orderItems')
                                         ->label("Products")
@@ -77,18 +95,6 @@ class Invoice extends Page
                                                 ->required()
                                                 ->live()
                                         ])
-                                        ->afterStateHydrated(function (Set $set, $state, Get $get) {
-                                            if (is_array($state)) {
-                                                foreach ($state as $key => $item) {
-                                                    if (isset($item['product_id'])) {
-                                                        $product = Product::find($item['product_id']);
-                                                        if ($product) {
-                                                            $set('orderItems.' . $key . '.productName', $product->name);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        })
                                         ->afterStateUpdated(function (Set $set, $state, Get $get) {
                                             $productX = [];
                                             foreach ($state as $xx) {
@@ -163,7 +169,7 @@ class Invoice extends Page
                             ->live()
                             ->afterStateUpdated(function (Set $set, $state, Get $get) { 
                                 $set('orderName', $get('name'));
-                            }),
+                            })->columnSpanFull(),
                 
                         Forms\Components\Select::make('user_id')
                             ->options(fn() => User::whereNot('id', auth()->user()->id)->pluck('name', 'id'))
@@ -171,7 +177,23 @@ class Invoice extends Page
                             ->live()
                             ->afterStateUpdated(function (Set $set, $state, Get $get) { 
                                $set('userIdEdit', $get('user_id'));
-                            }),
+                            })->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                ->required()
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('email')
+                                ->email()
+                                ->required()
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('password')
+                                ->password()
+                                ->required()
+                                ->maxLength(255),
+                           Forms\Components\FileUpload::make('image_url')
+                           ->disk('public')
+                           ->directory('user-images')
+                           ->visibility('public')
+                            ])->columnSpanFull(),
                         
                         Repeater::make('orderItems')
                             ->label("Products")
@@ -245,6 +267,26 @@ class Invoice extends Page
             return $order;
         });
     }
+    public function viewAction()
+    {
+        return ViewAction::make()
+        ->model(Order::class)
+        ->record(function (array $arguments) 
+        {
+            $order = \App\Models\Order::find($arguments['orderId']);
+            return $order;
+        })->infolist(
+            function(array $arguments){
+            return [
+            ViewEntry::make('status')
+            ->view('filament.pages.invoiceView',[
+            'orderId'=> $arguments,
+            ])
+
+        ];}
+    );
+    }
+    
 
 
 
@@ -253,7 +295,7 @@ class Invoice extends Page
     public function orderData()
     {
 
-        $aa = Order::query()->with('user')->paginate(5);
+        $aa = Order::query()->with('user')->paginate(1);
         return $aa;
     }
 

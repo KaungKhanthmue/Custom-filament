@@ -76,12 +76,10 @@
                                 </td>
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{$orderList->total_price}}</td>
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div class="flex justify-end items-center gap-x-6">
-                                        <button class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                            Archive
-                                        </button>
-                                {{($this->editAction)(['orderId'=>$orderList->id])}} 
-                                {{($this->deleteAction)(['orderId'=>$orderList->id])}}
+                                    <div class="flex justify-end items-center gap-x-2">
+                                        {{($this->viewAction)(['orderId'=>$orderList->id])}}
+                                        {{($this->editAction)(['orderId'=>$orderList->id])}} 
+                                        {{($this->deleteAction)(['orderId'=>$orderList->id])}}exportAction
                                     </div>
                                 </td>
                             </tr>
