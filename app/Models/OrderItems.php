@@ -12,7 +12,6 @@ class OrderItems extends BaseModel
   protected $fillable = [
     "order_id",
     "product_id",
-    "price",
   ];
 
   /**

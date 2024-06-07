@@ -35,6 +35,10 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
+               Forms\Components\FileUpload::make('image_url')
+               ->disk('public')
+               ->directory('user-images')
+               ->visibility('public')
             ]);
     }
 

@@ -9,11 +9,9 @@ use App\Models\Product;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Split;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -21,8 +19,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class OrderResource extends Resource
 {
@@ -45,12 +42,13 @@ class OrderResource extends Resource
                     }),
                 
                 Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
+                    ->options(fn() => User::whereNot('id',auth()->user()->id)->pluck('name','id') )
                     ->required()
                     ->live()
                     ->afterStateUpdated(function (Set $set, $state, Get $get) { 
                         $user= User::find($get('user_id'));
                         $set('user', $user->name);
+                        $set('email', $user->email);
                         $set('authUser',auth()->user()->name);
                     }),
                     Repeater::make('orderItems')
@@ -96,10 +94,10 @@ class OrderResource extends Resource
                 ])->columnSpan(2),
                 Split::make([
                     ViewField::make('inventory')
-                    ->columnSpan(2)
+                    ->columnSpanFull()
                     ->hiddenLabel()
                     ->view('filament.pages.inventory'),
-                ])->columnSpan(2),
+                ])->columnSpan(2), 
 
             ])->columns(4);
     }

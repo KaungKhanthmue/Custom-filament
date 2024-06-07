@@ -1,27 +1,30 @@
 @php
-    $data = $this->form->getRawState();
-    $slectedProducts = $data['productAll']??null;
-    $orderName = $data['name'] ?? null;
-    $customer = $data['user']?? null;
-    $customerEmail = $data['email'] ?? null;
-    $serviceHuman = $data['authUser']?? null;
-    $totalPrice=[];
-    $total = 0;
-    if($slectedProducts){
-      foreach($slectedProducts as $product)
-      {
-      $totalPrice[] = $product?->price;
-      } 
-      $total = array_sum($totalPrice);
-    }
-  
+$user= App\Models\User::find($userId);
+$order =App\Models\Order::where('name',$name)->with('orderItems.product')->first();
 
+$price =[];
+$total = 0;
+$totalView = 0;
+
+    if($productAll)
+    {
+        foreach($productAll as $product)
+        {
+        $price[] = $product->price;
+        }
+        $total = array_sum($price);
+    }
+    foreach($order->orderItems as $orderItem)
+    {
+      $price[] = $orderItem->product->price;
+      $totalView = array_sum($price);
+    }
 
 
 @endphp
-<x-inventory>
 
-<div class="w-full h-[600px] dark:bg-gray-900 bg-white shadow-2xl rounded-xl">
+<div class="">
+<div class="w-full  dark:bg-gray-900 bg-white shadow-2xl rounded-xl">
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center pb-8">
       <div class="flex items-center">
@@ -41,10 +44,10 @@
       <p class="text-gray-900 dark:text-white">Service Human </p>
     </div>
     <div class="">
-    <h2 class="text-lg font-bold pb-2">{{$orderName}}</h2>
-      <p class="text-gray-900 dark:text-white">{{$customer}}</p>
-      <p class="text-gray-900 dark:text-white">{{$customerEmail}}</p>
-      <p class="text-gray-900 dark:text-white">{{$serviceHuman}}</p>
+    <h2 class="text-lg font-bold pb-2">{{$name}}</h2>
+      <p class="text-gray-900 dark:text-white">{{$user?->name}}</p>
+      <p class="text-gray-900 dark:text-white">{{$user?->email}}</p>
+      <p class="text-gray-900 dark:text-white">{{$authUser}}</p>
     </div>
     
     </div>
@@ -59,9 +62,20 @@
           </tr>
         </thead>
         <tbody>
-          @if($slectedProducts)
+          
+          @if($order->orderItems && $productAll == null)
 
-          @foreach($slectedProducts as $product)
+          @foreach($order->orderItems as $orderItem)
+          <tr>
+            <td class="px-4 py-2 border border-gray-300">{{$orderItem?->product?->name}}</td>
+            <td class="px-4 py-2 border border-gray-300">{{$orderItem?->product?->description}}</td>
+            <td class="px-4 py-2 text-right border border-gray-300">1</td>
+            <td class="px-4 py-2 text-right border border-gray-300">{{$orderItem?->product?->price}}</td>
+          </tr>
+          @endforeach
+          @else
+          @if($productAll)
+          @foreach($productAll as $product)
           <tr>
             <td class="px-4 py-2 border border-gray-300">{{$product?->name}}</td>
             <td class="px-4 py-2 border border-gray-300">{{$product?->description}}</td>
@@ -69,13 +83,7 @@
             <td class="px-4 py-2 text-right border border-gray-300">{{$product?->price}}</td>
           </tr>
           @endforeach
-          @else
-          <tr>
-            <td class="px-4 py-2 border border-gray-300"></td>
-            <td class="px-4 py-2 border border-gray-300"></td>
-            <td class="px-4 py-2 text-right border border-gray-300"></td>
-            <td class="px-4 py-2 text-right border border-gray-300"></td>
-          </tr>
+          @endif
           @endif
 
           </tbody>
@@ -86,10 +94,14 @@
         <p>Subtotal: $<span id="subtotal"></span></p>
         </div>
       <div class="text-right font-bold">
+        @if($productAll)
         <p>Total: $<span id="total">{{$total}}</span></p>
+        @else
+        <p>Total: $<span id="total">{{$totalView}}</span></p>
+        @endif
       </div>
     </div>
   </div>
 </div>
 
-</x-inventory>
+</div>

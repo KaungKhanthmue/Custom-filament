@@ -1,27 +1,21 @@
 @php
-    $data = $this->form->getRawState();
-    $slectedProducts = $data['productAll']??null;
-    $orderName = $data['name'] ?? null;
-    $customer = $data['user']?? null;
-    $customerEmail = $data['email'] ?? null;
-    $serviceHuman = $data['authUser']?? null;
-    $totalPrice=[];
-    $total = 0;
-    if($slectedProducts){
-      foreach($slectedProducts as $product)
-      {
-      $totalPrice[] = $product?->price;
-      } 
-      $total = array_sum($totalPrice);
-    }
-  
+$price =[];
+$total = 0;
 
+    if($productAll)
+    {
+        foreach($productAll as $product)
+        {
+        $price[] = $product->price;
+        }
+        $total = array_sum($price);
+    }
 
 
 @endphp
-<x-inventory>
 
-<div class="w-full h-[600px] dark:bg-gray-900 bg-white shadow-2xl rounded-xl">
+<div class="">
+<div class="w-full  dark:bg-gray-900 bg-white shadow-2xl rounded-xl">
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center pb-8">
       <div class="flex items-center">
@@ -41,10 +35,10 @@
       <p class="text-gray-900 dark:text-white">Service Human </p>
     </div>
     <div class="">
-    <h2 class="text-lg font-bold pb-2">{{$orderName}}</h2>
+    <h2 class="text-lg font-bold pb-2">{{$name}}</h2>
       <p class="text-gray-900 dark:text-white">{{$customer}}</p>
-      <p class="text-gray-900 dark:text-white">{{$customerEmail}}</p>
-      <p class="text-gray-900 dark:text-white">{{$serviceHuman}}</p>
+      <p class="text-gray-900 dark:text-white">{{$email}}</p>
+      <p class="text-gray-900 dark:text-white">{{$authUser}}</p>
     </div>
     
     </div>
@@ -59,9 +53,9 @@
           </tr>
         </thead>
         <tbody>
-          @if($slectedProducts)
+          @if($productAll)
 
-          @foreach($slectedProducts as $product)
+          @foreach($productAll as $product)
           <tr>
             <td class="px-4 py-2 border border-gray-300">{{$product?->name}}</td>
             <td class="px-4 py-2 border border-gray-300">{{$product?->description}}</td>
@@ -92,4 +86,4 @@
   </div>
 </div>
 
-</x-inventory>
+</div>

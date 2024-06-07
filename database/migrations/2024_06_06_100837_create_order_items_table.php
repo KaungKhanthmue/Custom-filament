@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->string('invoice_code')->nullable();
             $table->foreignUlid('order_id')->references('id')->on('orders')->cascadeOnDelete();
             $table->foreignUlid('product_id')->references('id')->on('products')->cascadeOnDelete();
-            $table->decimal('price',10,2)->default(0);
             $table->timestamps();
         });
     }
