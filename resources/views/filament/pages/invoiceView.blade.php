@@ -12,6 +12,19 @@
 @endphp
 
 <div class="">
+<div class="mt-5 flex justify-end gap-x-2 no-print">
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none "
+                    href="#" @click="window.print()" >
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="6 9 6 2 18 2 18 9" />
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                        <rect width="12" height="8" x="6" y="14" />
+                    </svg>
+                    Print
+                </a>
+            </div>
 <div class="w-full  dark:bg-gray-900 bg-white shadow-2xl rounded-xl">
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center pb-8">

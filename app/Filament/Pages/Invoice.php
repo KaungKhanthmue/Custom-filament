@@ -22,14 +22,15 @@ use Filament\Pages\Page;
 use Livewire\Attributes\Computed;
 use Filament\Infolists\Components\ViewEntry;
 use Livewire\WithPagination;
-
+use Livewire\Attributes\Url;
 
 class Invoice extends Page
 {
     use WithPagination;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static string $view = 'filament.pages.invoice';
-    
+    #[Url]
+    public ?string $status = 'pending';
 
 
  
@@ -147,6 +148,7 @@ class Invoice extends Page
         return EditAction::make()
         ->name('edit')
         ->outlined()   
+        ->color('success')
         ->model(User::class)
         ->label('edit')
         ->model(Order::class)
@@ -258,7 +260,7 @@ class Invoice extends Page
     public function deleteAction()
     {
         return DeleteAction::make()
-        ->color('info')
+        ->color('danger')
         ->outlined()   
         ->model(Order::class)
         ->record(function (array $arguments) 
@@ -270,6 +272,9 @@ class Invoice extends Page
     public function viewAction()
     {
         return ViewAction::make()
+        ->label('Print')
+        ->color('info')
+        ->outlined()
         ->model(Order::class)
         ->record(function (array $arguments) 
         {
@@ -288,15 +293,27 @@ class Invoice extends Page
     }
     
 
-
+public $paid= 'processing';
 
     #[Computed()]
 
     public function orderData()
     {
 
-        $aa = Order::query()->with('user')->paginate(1);
+        $status = $this->status;
+        $aa = Order::with('user')->where('status',$status??'pending')->paginate(2);
         return $aa;
+    }
+
+    public function upaidOrders()
+    {
+        $this->status = 'pending';
+        
+    }
+    public function paidOrders()
+    {
+         $this->status = 'paid';
+        
     }
 
 }
