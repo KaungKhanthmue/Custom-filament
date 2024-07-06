@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="flex items-center py-2 pl-1">
-                <div class="flex items-center">
+                <div class="flex">
                     <img src="https://tailwindcss.com/img/card-top.jpg" class="w-10 h-10 bg-red-300 rounded-full"
                         alt="">
                     <p class="ml-2 mt-3 ">{{$product->user->name}}</p>
@@ -32,7 +32,6 @@
                     <p class="text-blue-400 mr-2 font-thin">{{ $product->created_at->diffForHumans() }}</p>
                 </div>
             </div>
-
         </div>
         @endforeach
     </div>

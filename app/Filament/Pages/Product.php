@@ -31,7 +31,9 @@ class Product extends Page
             ->form([
                 Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                    Forms\Components\Select::make('user_id')
+                        ->relationship('user','name'),
+                    Forms\Components\TextInput::make('name')
                         ->required(),
                     Forms\Components\TextInput::make('description'),
                     Forms\Components\Select::make('category_id')
