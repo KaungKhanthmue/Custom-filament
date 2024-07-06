@@ -16,6 +16,7 @@ class Product extends BaseModel
         "description",
         "category_id",
         "brand_id",
+        "user_id",
         "price",
     ];
 
@@ -36,5 +37,10 @@ class Product extends BaseModel
      public function orderItesm(): HasMany
      {
         return $this->hasMany(OrderItems::class);
+     }
+
+     public function user(): BelongsTo
+     {
+       return $this->belongsTo(User::class);
      }
 }

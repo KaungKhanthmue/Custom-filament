@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->foreignUlid('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->foreignUlid('brand_id')->references('id')->on('brands')->cascadeOnDelete();
+            $table->foreignUlid('user_id')->references('id')->on('users')->cascadeOnDelete(); 
             $table->decimal('price',10,2)->default(0);
             $table->timestamps();
         });

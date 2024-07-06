@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,11 +21,13 @@ class ProductFactory extends Factory
     {
         $categories = Category::all();
         $brands = Brand::all();
+        $users = User::all();
         return [
             "name" => fake()->name,
-            "description" => fake()->sentence, 
+            "description" => 'test', 
             "category_id" => fake()->randomElement($categories)->id,
             "brand_id" => fake()->randomElement($brands)->id,
+            "user_id" => fake()->randomElement($users)->id, 
             "price"  => $this->faker->numberBetween($min=1000, $max=10000),
         ];
     }
