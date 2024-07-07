@@ -22,6 +22,40 @@
                 <button class="w-[100px] h-[40px]  text-black ml-2">Photos</button>
                 <button class="w-[100px] h-[40px]  text-black ml-2">Videos</button>
             </div>
+            <div class="w-full px-4 mt-4">
+                <h1 class="font-bold text-xl">Detail</h1>
+                <div class="">
+                    <div class="flex">
+                        <h1 class="font-bold text-md mr-8">Joinded Date </h1>
+                        <p>: Joined Jun 16</p>
+                    </div>
+                    <div class="flex">
+                        <h1 class="font-bold text-md mr-8">Follower Count</h1>
+                        <p>: Follower 145</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full  bg-black mt-4">
+                <div class="grid grid-cols-8 gap-6 p-4">
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+                    <div class="w-[100%] h-[150px] bg-red-500"></div>
+
+                </div>
+            </div>
         </div>
         <div class="bg-black w-[300px] h-[300px] rounded-full z-10 absolute top-[350px] left-[42%] "></div>
     </div>
