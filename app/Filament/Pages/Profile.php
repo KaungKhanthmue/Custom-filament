@@ -19,7 +19,7 @@ class Profile extends Page
     
     public function authUser()
     {
-        $user = User::findOrFail(auth()->user()->id);
+        $user = User::with('userOneFriend')->findOrFail(auth()->user()->id);
         return $user;
     }
 

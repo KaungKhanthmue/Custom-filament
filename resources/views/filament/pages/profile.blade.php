@@ -41,79 +41,16 @@
             </div>
             <div class="w-full  bg-black mt-4">
                 <div class="grid grid-cols-6 gap-4 p-4">
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
+                    @foreach($this->authUser->userOneFriend as $friends)
+                    <div class="w-[100%] h-[220px] bg-white shadow-md p-1 rounded-md">
+                        <div class=""><img src="{{$friends->profile_image}}" alt="" class="w-full h-[70%]">
                         </div>
                         <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
+                            <p class="font-bold text-md">{{$friends->name}}</p>
+                            <p class="font-thin text-xs">{{$friends->email}}</p>
                         </div>
                     </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-                    <div class="w-[100%] h-[200px] bg-white shadow-md p-1 rounded-md">
-                        <div class=""><img src="https://tailwindcss.com/img/card-top.jpg" alt="" class="w-full h-[70%]">
-                        </div>
-                        <div class="text-black">
-                            <p class="font-bold text-md">Zin May Htet</p>
-                            <p class="font-thin text-xs">23 Mutual Friends</p>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -121,5 +58,6 @@
             <img src="{{ Storage::url($this->authUser()->profile_image) }}" class="w-[290px] h-[290px] rounded-full"
                 alt="User Profile Image">
         </div>
+
     </div>
 </x-filament-panels::page>
