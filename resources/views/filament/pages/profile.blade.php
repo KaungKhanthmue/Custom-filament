@@ -53,6 +53,7 @@
                     @endforeach
                 </div>
             </div>
+            <div class="w-full h-[100px] bg-gray-300"></div>
         </div>
         <div class="bg-black w-[300px] h-[300px] p-1 rounded-full z-10 absolute top-[350px] left-[42%] ">
             <img src="{{ Storage::url($this->authUser()->profile_image) }}" class="w-[290px] h-[290px] rounded-full"
